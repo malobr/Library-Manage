@@ -17,7 +17,7 @@ class AuthController extends Controller
             'name' => 'required|string',
             'cpf' => 'required|unique:users,cpf',
             'email' => 'required|unique:users,email',
-            'password' => ['required', 'confirmed', Password::min(6)],
+            'password' => ['required', Password::min(6)],
         ]);
 
         if ($validator->fails()) {
@@ -52,9 +52,10 @@ class AuthController extends Controller
             return response()->json(['message' => 'Credenciais inválidas'], 401);
         }
 
-        $token = $user->createToken('BibliotecaApp')->plainTextToken;
+        $token = $user->createToken('authToken')->plainTextToken;
 
-        return response()->json(['token' => $token, 'user'=> $user]);
+        return response()->json(['token' => $token, 'user' => $user]);
+
     }
 
     // Logout de Usuário
@@ -90,32 +91,33 @@ class AuthController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'cpf' => 'required|unique:users,cpf,' . $id,
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => ['nullable', 'confirmed', Password::min(6)],
+            'name' => 'nullable|string',
+            'cpf' => 'nullable|unique:users,cpf,' . $id,  // Ignorar o CPF do próprio usuário ao validar
+            'email' => 'nullable|email|unique:users,email,' . $id,  // Ignorar o e-mail do próprio usuário ao validar
+            'password' => ['nullable', Password::min(6)], // Senha opcional, mas confirmada
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+    
         $user = User::find($id);
-
+    
         if (!$user) {
             return response()->json(['message' => 'Usuário não encontrado'], 404);
         }
-
+    
+        // Atualizar os dados do usuário
         $user->update([
-            'name' => $request->name,
-            'cpf' => $request->cpf,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
+            'name' => $request->name ?? $user->name,
+            'cpf' => $request->cpf ?? $user->cpf,  // Manter o CPF atual se não for enviado
+            'email' => $request->email ?? $user->email,  // Manter o e-mail atual se não for enviado
+            'password' => $request->password ? Hash::make($request->password) : $user->password,  // Atualizar a senha se fornecida
         ]);
-
+    
         return response()->json($user);
     }
-
+    
     // Deletar um usuário específico
     public function destroy($id)
     {

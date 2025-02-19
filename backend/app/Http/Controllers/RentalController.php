@@ -10,22 +10,34 @@ class RentalController extends Controller
 {
     // Listar todos os aluguéis
     public function index()
-    {
-        $rentals = Rental::with(['book', 'user'])->get();
-        return response()->json($rentals);
-    }
+{
+    // Paginando os aluguéis, incluindo as relações 'book' e 'user'
+    $rentals = Rental::with(['book', 'user'])->paginate(10);  // 10 resultados por página
+
+    return response()->json($rentals);
+}
+
 
     // Mostrar um aluguel específico
-    public function show($id)
+    public function show($searchTerm)
     {
-        $rental = Rental::with(['book', 'user'])->find($id);
-
+        // Buscar aluguel com base no nome do usuário ou do livro
+        $rental = Rental::with(['book', 'user'])
+            ->whereHas('user', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', '%' . $searchTerm . '%');
+            })
+            ->orWhereHas('book', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', '%' . $searchTerm . '%');
+            })
+            ->get();
+    
         if (!$rental) {
             return response()->json(['message' => 'Aluguel não encontrado'], 404);
         }
-
+    
         return response()->json($rental);
     }
+    
 
     // Criar um novo aluguel (alugar um livro)
     public function store(Request $request)

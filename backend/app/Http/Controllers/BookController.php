@@ -10,24 +10,42 @@ class BookController extends Controller
     // Listar todos os livros
     public function index()
     {
-        $books = Book::all();
-        return response()->json($books);
-    }
-
-    // Mostrar um livro específico
-    public function show($id)
-    {
-        $book = Book::find($id);
-        
-        if (!$book) {
-            return response()->json(['message' => 'Livro não encontrado'], 404);
-        }
-
+        // Obter todos os livros com paginação (10 livros por página)
+        $books = Book::paginate(10);
+    
         return response()->json([
-            'book' => $book,
-            'available' => $book->available,  // Adiciona a disponibilidade
+            'books' => $books->items(),  // Itens da página atual
+            'total' => $books->total(),  // Total de livros encontrados
+            'per_page' => $books->perPage(),  // Quantidade de itens por página
+            'current_page' => $books->currentPage(),  // Página atual
+            'last_page' => $books->lastPage()  // Última página
         ]);
     }
+    
+
+    // Mostrar um livro específico
+   
+    public function show($name)
+    {
+        // Buscar livros com o nome similar (paginado)
+        $books = Book::where('name', 'like', '%' . $name . '%')->paginate(10);
+    
+        // Verificando se existem livros encontrados
+        if ($books->isEmpty()) {
+            return response()->json(['message' => 'Nenhum livro encontrado'], 404);
+        }
+    
+        // Retornando os livros paginados com a coluna 'available'
+        return response()->json([
+            'books' => $books->items(),
+            'total' => $books->total(),
+            'per_page' => $books->perPage(),
+            'current_page' => $books->currentPage(),
+            'last_page' => $books->lastPage(),
+        ]);
+    }
+    
+    
 
     // Criar um novo livro
     public function store(Request $request)
