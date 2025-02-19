@@ -134,8 +134,4 @@ Execute os seguintes comandos:
    php artisan serve
    ```
 
-Acesse o sistema no navegador pelo endereço padrão: [http://localhost:8000](http://localhost:8000).
 
---- 
-
-Agora, a seção dos **Aluguéis** foi atualizada para incluir os endpoints completos, e o comando `php artisan db:seed` foi adicionado para preencher o banco de dados com dados iniciais.
