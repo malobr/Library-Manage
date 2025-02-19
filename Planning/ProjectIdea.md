@@ -1,5 +1,7 @@
 # Desafio Backend
 
+`Eu nao fiz apenas o desafio, eu melhorei implementando outras coisas....`
+
 O desafio consiste em criar uma API REST que simule um sistema interno de uma biblioteca. O sistema deve incluir CRUDs para gerenciar usuários e livros, além de rotas para gerenciar os livros que estão sendo alugados pelos usuários.
 
 ## Requisitos
