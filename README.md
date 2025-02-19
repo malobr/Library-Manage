@@ -134,6 +134,17 @@ Execute os seguintes comandos:
    php artisan serve
    ```
    
-7. Importe o Json (LibraryRentals.postman_collection.json) disponibilizado no Postman ou Insomnia para conseguir realizar testes e as Requisicoes...
 
-   O arquivo esta na pasta principal do projeto...
+7. Importar o Arquivo JSON no Postman
+
+  Para testar os endpoints da API, importe o arquivo de coleção disponível:
+  
+  1. O arquivo `LibraryRentals.postman_collection.json` está localizado na pasta raiz do projeto.
+  2. Abra o **Postman**.
+  3. Clique em **Importar** (ícone no canto superior esquerdo).
+  4. Selecione **Arquivo** e localize o arquivo `LibraryRentals.postman_collection.json` na pasta raiz do seu repositório.
+  5. Clique em **Importar**.
+  
+  Agora, você poderá testar todos os endpoints diretamente através do Postman...
+
+
