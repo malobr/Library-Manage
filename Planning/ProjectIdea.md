@@ -1,11 +1,11 @@
-# Desafio para Vaga de Backend
+# Desafio Backend
 
 O desafio consiste em criar uma API REST que simule um sistema interno de uma biblioteca. O sistema deve incluir CRUDs para gerenciar usuários e livros, além de rotas para gerenciar os livros que estão sendo alugados pelos usuários.
 
 ## Requisitos
 
 ### Tecnologias e Configuração
-- **Framework**: Laravel 10
+- **Framework**: Laravel 11
 - **Banco de Dados**: Relacional (MySQL ou PostgreSQL)
 
 ### Estrutura de Dados
