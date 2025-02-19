@@ -133,5 +133,7 @@ Execute os seguintes comandos:
    ```bash
    php artisan serve
    ```
+   
+7. Importe o Json (LibraryRentals.postman_collection.json) disponibilizado no Postman ou Insomnia para conseguir realizar testes e as Requisicoes...
 
-
+   O arquivo esta na pasta principal do projeto...
