@@ -10,13 +10,14 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run()
-    {
-        // Chamar os seeders de User, Book e Rental
-        $this->call([
-            UserSeeder::class,
-            BookSeeder::class,
-            RentalSeeder::class,
-        ]);
-    }
+public function run(): void
+{
+    $this->call([
+        RolePermissionSeeder::class,
+        UserSeeder::class,
+        BookSeeder::class,
+        RentalSeeder::class,
+    ]);
+}
+
 }
